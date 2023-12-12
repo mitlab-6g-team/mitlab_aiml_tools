@@ -1,4 +1,4 @@
-- # mitlab-aiml-pipeline-utils
+# mitlab-aiml-tools
 
 - ## Introduction
     Our custom Python package is designed to streamline the development of pipelines, providing essential functionalities for efficient pipeline design. The package encompasses a range of features tailored to facilitate tasks commonly encountered in pipeline development, including file access, metadata retrieval and referencing, logging, and more.
@@ -28,7 +28,7 @@
   - ### Step 0. Installation
 
     ```bash=
-        pip install .
+        pip install git+https://github.com/mitlab-6g-team/mitlab-aiml-tools.git
     ```
 
     - ### Step 1. Setting .env
@@ -41,7 +41,7 @@
   - ### Step 2. Import
 
     ```python=
-        import mitlab-aiml-pipeline-utils
+        import mitlab-aiml-tools
     ```
 
 - ## Q&A

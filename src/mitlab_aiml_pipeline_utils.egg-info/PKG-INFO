@@ -1,9 +1,0 @@
-Metadata-Version: 2.1
-Name: mitlab-aiml-pipeline-utils
-Version: 0.1
-Author: MITLAB
-Author-email: mitlab6g.project@gmail.com
-Requires-Python: >=3
-License-File: LICENSE
-Requires-Dist: requests
-Requires-Dist: dotenv

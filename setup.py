@@ -1,12 +1,11 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='mitlab-aiml-pipeline-utils',
+    name='mitlab-aiml-tools',
     version='0.1',
     author="MITLAB",
     author_email="mitlab6g.project@gmail.com",
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
+    packages=find_packages(),
     install_requires=['requests', 'dotenv'],
     python_requires='>=3'
 )
