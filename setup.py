@@ -6,6 +6,6 @@ setup(
     author="MITLAB",
     author_email="mitlab6g.project@gmail.com",
     packages=find_packages(),
-    install_requires=['requests', 'dotenv'],
+    install_requires=['requests', 'python-dotenv'],
     python_requires='>=3'
 )

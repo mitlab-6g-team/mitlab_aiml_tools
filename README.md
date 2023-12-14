@@ -45,4 +45,5 @@
     ```
 
 - ## Q&A
-(To be added...)
+  - Q1:```pip install git+https://github.com/mitlab-6g-team/mitlab-aiml-tools.git``` failed
+    - A1: ```pip uninstall distribute``` to install essential lib
