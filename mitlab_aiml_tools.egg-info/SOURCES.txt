@@ -9,7 +9,9 @@ mitlab_aiml_tools.egg-info/top_level.txt
 pipeline/__init__.py
 pipeline/compress.py
 pipeline/file.py
-pipeline/logging.py
-tests/test.py
-utils/__init__.py
-utils/config.py
+pipeline/utils/__init__.py
+pipeline/utils/config.py
+pipeline/utils/tools.py
+tests/__init__.py
+tests/test_compress.py
+tests/test_pipeline.py

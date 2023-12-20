@@ -1,8 +1,9 @@
 import requests
-from utils.config import config
-from utils.tools import format_actor_string
+from .utils.config import config
+from .utils.tools import format_actor_string
 
-DEFAULT_HEADER = "application/json"
+
+DEFAULT_HEADER = {"Content-Type": "application/json"}
 MODULE_NAME = 'file_operation'
 
 TYPE_DICT = {
@@ -17,46 +18,40 @@ TYPE_DICT = {
     'model': "Model",
 }
 
-print(MODULE_NAME)
-
 
 class FileUtility:
 
-    def __init__(self, actor_type, file, uid_value) -> None:
+    def __init__(self, actor_type):
         self.actor_type = actor_type
-        self.file = file
-        self.uid_value = uid_value
 
-    def upload(self):
+    def upload(self, uid: str, file=None):
         """
             Upload file to file server
         """
+        DEFAULT_HEADER = {"Uid": str(uid)}
         try:
-            formatted_actor_type = format_actor_string(self.actor_type)
+            formatted_actor_string = format_actor_string(self.actor_type)
             response = requests.post(
-                url=f"{config['FILE_SERVER_PROTOCAL']}//{config['FILE_SERVER_HOST']}:{config['FILE_SERVER_PORT']}/{config['FILE_SERVER_API_PREFIX']}/{config['FILE_SERVER_API_VERSION']}/{MODULE_NAME}/{formatted_actor_type}FileManager/upload",
+                url=f"{config['FILE_SERVER_PROTOCAL']}://{config['FILE_SERVER_HOST']}:{config['FILE_SERVER_PORT']}/{config['FILE_SERVER_API_PREFIX']}/{config['FILE_SERVER_API_VERSION']}/{MODULE_NAME}/{formatted_actor_string}FileManager/upload",
                 headers=DEFAULT_HEADER,
-                files=self.file
+                files=file
             )
-            print(response, response.json())
+            return response
         except Exception as e:
-            print(str(e))
-            raise ConnectionError(e)
+            return str(e)
 
-    def download(self):
+    def download(self, uid: str):
         """
             Download file from file server
         """
+        DEFAULT_HEADER = {"Content-Type": "application/json"}
         try:
-            formatted_actor_type = format_actor_string(self.actor_type)
+            formatted_actor_string = format_actor_string(self.actor_type)
             response = requests.post(
-                url=f"{config['FILE_SERVER_PROTOCAL']}//{config['FILE_SERVER_HOST']}:{config['FILE_SERVER_PORT']}/{config['FILE_SERVER_API_PREFIX']}/{config['FILE_SERVER_API_VERSION']}/{MODULE_NAME}/{formatted_actor_type}FileManager/download",
+                url=f"{config['FILE_SERVER_PROTOCAL']}://{config['FILE_SERVER_HOST']}:{config['FILE_SERVER_PORT']}/{config['FILE_SERVER_API_PREFIX']}/{config['FILE_SERVER_API_VERSION']}/{MODULE_NAME}/{formatted_actor_string}FileManager/download",
                 headers=DEFAULT_HEADER,
-                json={
-                    f"{self.actor_type}_uid": self.uid_value
-                }
+                json={f"{self.actor_type}_uid": uid}
             )
-            print(response, response.json())
+            return response
         except Exception as e:
-            print(str(e))
-            raise ConnectionError(e)
+            return str(e)

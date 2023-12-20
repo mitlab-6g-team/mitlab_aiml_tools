@@ -6,4 +6,4 @@ Author-email: mitlab6g.project@gmail.com
 Requires-Python: >=3
 License-File: LICENSE
 Requires-Dist: requests
-Requires-Dist: dotenv
+Requires-Dist: python-dotenv
