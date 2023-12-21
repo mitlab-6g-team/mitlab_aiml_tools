@@ -3,10 +3,9 @@ from .utils.config import config
 from .utils.tools import format_actor_string
 
 
-DEFAULT_HEADER = {"Content-Type": "application/json"}
 MODULE_NAME = 'file_operation'
 
-TYPE_DICT = {
+ALLOWED_TYPE_DICT = {
     'original_dataset': 'OriginalDataset',
     'training_dataset': "TrainingDataset",
     'preprocessing_pipeline': "PreprocessingPipeline",
@@ -20,38 +19,94 @@ TYPE_DICT = {
 
 
 class FileUtility:
+    """
+        Handling the upload and download function for the file server
 
-    def __init__(self, actor_type):
-        self.actor_type = actor_type
+        Attributes:
+            file_type (str): the type of the file
+            (Allowed types: original_dataset, training_dataset, preprocessing_pipeline, preprocessing_logs, preprocessing_image, training_pipeline, training_logs, training_image, mode)
 
-    def upload(self, uid: str, file=None):
+    """
+
+    def __init__(self, file_type: str):
+        """
+            Initialization for the File Utility
+
+            Args:
+                file_type (str): file type
+        """
+        self.file_type = self._validate_file_type(file_type)
+
+    def _validate_file_type(self, value: str):
+        """
+            Validate whether the file type is legal or not
+
+            Args:
+                value (str): the value the need to validate
+
+            Returns:
+                (Success): <File Type String>
+                (Failed): Raise Value Error
+
+        """
+        if value not in ALLOWED_TYPE_DICT.keys():
+            raise ValueError(
+                f"Invalid value for 'file_type'. Allowed types are {', '.join(ALLOWED_TYPE_DICT.keys())}")
+        else:
+            return value
+
+    def upload(self, uid: str, file: None):
         """
             Upload file to file server
+
+            Args:
+                uid (str): the UID value for the file
+                file (file): the file that needed to upload
+
+            Returns:
+                (Success) : "File uploaded successfully"
+                (Failed) : "File uploaded failed"
+                (Exception): <Error Message>
+
         """
         DEFAULT_HEADER = {"Uid": str(uid)}
         try:
-            formatted_actor_string = format_actor_string(self.actor_type)
+            formatted_actor_string = format_actor_string(self.file_type)
             response = requests.post(
                 url=f"{config['FILE_SERVER_PROTOCAL']}://{config['FILE_SERVER_HOST']}:{config['FILE_SERVER_PORT']}/{config['FILE_SERVER_API_PREFIX']}/{config['FILE_SERVER_API_VERSION']}/{MODULE_NAME}/{formatted_actor_string}FileManager/upload",
                 headers=DEFAULT_HEADER,
                 files=file
             )
-            return response
+            if response.status_code == 200:
+                return "File uploaded successfully"
+            else:
+                return "File uploaded failed"
         except Exception as e:
             return str(e)
 
     def download(self, uid: str):
         """
             Download file from file server
+
+            Args:
+                uid (str): the UID value for the file
+
+            Returns:
+                (Success):  <File>
+                (Failed): "File downloaded failed"
+                (Exception): <Error Message>
         """
         DEFAULT_HEADER = {"Content-Type": "application/json"}
         try:
-            formatted_actor_string = format_actor_string(self.actor_type)
+            formatted_actor_string = format_actor_string(self.file_type)
             response = requests.post(
                 url=f"{config['FILE_SERVER_PROTOCAL']}://{config['FILE_SERVER_HOST']}:{config['FILE_SERVER_PORT']}/{config['FILE_SERVER_API_PREFIX']}/{config['FILE_SERVER_API_VERSION']}/{MODULE_NAME}/{formatted_actor_string}FileManager/download",
                 headers=DEFAULT_HEADER,
-                json={f"{self.actor_type}_uid": uid}
+                json={f"{self.file_type}_uid": uid}
             )
-            return response
+            if response.status_code == 200:
+                return response
+            else:
+                return "File downloaded failed"
         except Exception as e:
             return str(e)

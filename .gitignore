@@ -1,2 +1,7 @@
 Pipfile.lock
 .env
+*.pyc
+
+# Test
+test_model.h5
+test_original_dataset.tar.gz
