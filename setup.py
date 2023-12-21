@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='mitlab-aiml-tools',
-    version='0.1',
+    name='mitlab_aiml_tools',
+    version='0.1.0',
     author="MITLAB",
     author_email="mitlab6g.project@gmail.com",
     packages=find_packages(),
