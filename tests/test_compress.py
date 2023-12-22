@@ -1,6 +1,5 @@
 import unittest
-from pipeline.compress import CompressionUtility
-
+from mitlab_aiml_tools.pipeline.compress import CompressionUtility
 
 ARCHIVE_FILE_PATH = './packet.tar.gz'
 SOURCE_FOLDER_PATH = './docs'

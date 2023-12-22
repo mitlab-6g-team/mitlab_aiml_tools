@@ -1,6 +1,6 @@
 import unittest
 from uuid import uuid4
-from pipeline.file import FileUtility
+from mitlab_aiml_tools.pipeline.file import FileUtility
 
 # File type
 FILE_TYPE = 'model'
