@@ -1,6 +1,8 @@
 import requests
 from .utils.config import config
 from .utils.tools import format_actor_string
+from ..auth.credential import authenticated_only
+from ..auth.credential import CredentialServer
 
 
 MODULE_NAME = 'file_operation'
@@ -28,13 +30,15 @@ class FileUtility:
 
     """
 
-    def __init__(self, file_type: str):
+    def __init__(self, credential_manager: CredentialServer, file_type: str):
         """
             Initialization for the File Utility
 
             Args:
+                credential_manager (class): credential server to manage authenticate
                 file_type (str): file type
         """
+        self.credential_manager = credential_manager
         self.file_type = self._validate_file_type(file_type)
 
     def _validate_file_type(self, value: str):
@@ -55,6 +59,7 @@ class FileUtility:
         else:
             return value
 
+    @authenticated_only
     def upload(self, uid: str, file: None):
         """
             Upload file to file server
@@ -84,6 +89,7 @@ class FileUtility:
         except Exception as e:
             return str(e)
 
+    @authenticated_only
     def download(self, uid: str):
         """
             Download file from file server

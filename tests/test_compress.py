@@ -1,9 +1,9 @@
 import unittest
 from mitlab_aiml_tools.pipeline.compress import CompressionUtility
 
-ARCHIVE_FILE_PATH = './packet.tar.gz'
-SOURCE_FOLDER_PATH = './docs'
-TARGET_FOLDER_PATH = './'
+ARCHIVE_FILE_PATH = './tests/compressed_dataset.tar.gz'
+SOURCE_FOLDER_PATH = './tests/dataset'
+TARGET_FOLDER_PATH = './tests/decompressed_dataset'
 
 compress_manager = CompressionUtility(archive_name=ARCHIVE_FILE_PATH)
 

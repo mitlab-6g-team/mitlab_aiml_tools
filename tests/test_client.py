@@ -1,5 +1,5 @@
 import unittest
-from mitlab_aiml_tools.auth.credential import CredentialManager
+from mitlab_aiml_tools.auth.credential import CredentialServer
 
 HOST = "192.168.190.150"
 PORT = '40678'
@@ -15,7 +15,7 @@ SECRET_KEY = 'test12345'
 class TestCredentialManager(unittest.TestCase):
 
     def test_init(self):
-        credential_manager = CredentialManager(
+        credential_manager = CredentialServer(
             host=HOST,
             port=PORT,
             api_root=API_ROOT,
