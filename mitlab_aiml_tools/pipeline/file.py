@@ -25,21 +25,17 @@ class FileUtility:
         Handling the upload and download function for the file server
 
         Attributes:
-            file_type (str): the type of the file
-            (Allowed types: original_dataset, training_dataset, preprocessing_pipeline, preprocessing_logs, preprocessing_image, training_pipeline, training_logs, training_image, mode)
-
+            credential_manager (class): credential manager for authenticatication
     """
 
-    def __init__(self, credential_manager: CredentialServer, file_type: str):
+    def __init__(self, credential_manager: CredentialServer):
         """
             Initialization for the File Utility
 
             Args:
-                credential_manager (class): credential server to manage authenticate
-                file_type (str): file type
+                credential_manager (class): credential manager for authenticatication
         """
         self.credential_manager = credential_manager
-        self.file_type = self._validate_file_type(file_type)
 
     def _validate_file_type(self, value: str):
         """
@@ -47,6 +43,7 @@ class FileUtility:
 
             Args:
                 value (str): the value the need to validate
+                (Allowed values: original_dataset, training_dataset, preprocessing_pipeline, preprocessing_logs, preprocessing_image, training_pipeline, training_logs, training_image, mode)
 
             Returns:
                 (Success): <File Type String>
@@ -60,11 +57,12 @@ class FileUtility:
             return value
 
     @authenticated_only
-    def upload(self, uid: str, file: None):
+    def upload(self, file_type: str, uid: str, file: None):
         """
             Upload file to file server
 
             Args:
+                file_type (str): the type of the file
                 uid (str): the UID value for the file
                 file (file): the file that needed to upload
 
@@ -76,6 +74,7 @@ class FileUtility:
         """
         DEFAULT_HEADER = {"Uid": str(uid)}
         try:
+            self.file_type = self._validate_file_type(file_type)
             formatted_actor_string = format_actor_string(self.file_type)
             response = requests.post(
                 url=f"{config['FILE_SERVER_PROTOCAL']}://{config['FILE_SERVER_HOST']}:{config['FILE_SERVER_PORT']}/{config['FILE_SERVER_API_PREFIX']}/{config['FILE_SERVER_API_VERSION']}/{MODULE_NAME}/{formatted_actor_string}FileManager/upload",
@@ -90,11 +89,12 @@ class FileUtility:
             return str(e)
 
     @authenticated_only
-    def download(self, uid: str):
+    def download(self, file_type: str, uid: str):
         """
             Download file from file server
 
             Args:
+                file_type (str): the type of the file
                 uid (str): the UID value for the file
 
             Returns:
@@ -104,6 +104,7 @@ class FileUtility:
         """
         DEFAULT_HEADER = {"Content-Type": "application/json"}
         try:
+            self.file_type = self._validate_file_type(file_type)
             formatted_actor_string = format_actor_string(self.file_type)
             response = requests.post(
                 url=f"{config['FILE_SERVER_PROTOCAL']}://{config['FILE_SERVER_HOST']}:{config['FILE_SERVER_PORT']}/{config['FILE_SERVER_API_PREFIX']}/{config['FILE_SERVER_API_VERSION']}/{MODULE_NAME}/{formatted_actor_string}FileManager/download",

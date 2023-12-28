@@ -11,6 +11,9 @@ class CredentialServer:
         access_key (str): the access key for authentication
         secret_key (str): the secret key for authentication
         https (bool): decide the Https SSL/HLS protocol or not
+        api_root (str): the root string of API
+        api_version (str): the version of API
+        api_prefix (str): the prefix of API
     """
 
     def __init__(self,

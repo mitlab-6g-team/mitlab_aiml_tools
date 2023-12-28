@@ -19,16 +19,15 @@ credential_server = CredentialServer(
     secret_key='test12345'
 )
 
-file_manager = FileUtility(
-    credential_manager=credential_server,
-    file_type=FILE_TYPE
-)
+file_manager = FileUtility(credential_manager=credential_server)
 
 
 class TestFileUtility(unittest.TestCase):
 
     def test_download(self):
-        res = file_manager.download(uid=MODEL_DOWNLOAD_EXAMPLE_UID)
+        res = file_manager.download(
+            file_type=FILE_TYPE, uid=MODEL_DOWNLOAD_EXAMPLE_UID
+        )
         with open(MODEL_PATH, 'wb') as file:
             file.write(res.content)
 
@@ -36,6 +35,7 @@ class TestFileUtility(unittest.TestCase):
         with open(MODEL_PATH, 'rb') as file:
             files = {f'{FILE_TYPE}_file': (MODEL_PATH, file)}
             file_manager.upload(
+                file_type=FILE_TYPE,
                 uid=uuid4(),
                 file=files,
             )
