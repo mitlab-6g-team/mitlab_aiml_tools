@@ -26,16 +26,49 @@ class FileUtility:
 
         Attributes:
             credential_manager (class): credential manager for authenticatication
+            protocal (str): the protocal of file server
+            host (str): the host of file server
+            port (str): the port of file server
+            api_prefix (str): the api prefix of file server
+            api_version (str): the api version of file server
+
+        Args: 
+            file_type (str): the type of the file
+            uid (str): the UID value for the file
+            file (file): the file that needed to upload
     """
 
-    def __init__(self, credential_manager: CredentialServer):
+    def __init__(self,
+                 credential_manager: CredentialServer,
+                 protocal=config['FILE_SERVER_PROTOCAL'],
+                 host=config['FILE_SERVER_HOST'],
+                 port=config['FILE_SERVER_PORT'],
+                 api_prefix=config['FILE_SERVER_API_PREFIX'],
+                 api_version=config['FILE_SERVER_API_VERSION'],
+                 ):
         """
             Initialization for the File Utility
 
             Args:
                 credential_manager (class): credential manager for authenticatication
+                protocal (str): the protocal of file server
+                host (str): the host of file server
+                port (str): the port of file server
+                api_prefix (str): the api prefix of file server
+                api_version (str): the api version of file server
         """
-        self.credential_manager = credential_manager
+        self.credential_manager = credential_manager if credential_manager is not None else ValueError(
+            "credential_manager cannot be empty")
+        self.protocal = protocal if protocal is not None else ValueError(
+            "protocal cannot be empty")
+        self.host = host if host is not None else (
+            "host cannot be empty")
+        self.port = port if port is not None else ValueError(
+            "port cannot be empty")
+        self.api_prefix = api_prefix if protocal is not None else ValueError(
+            "api_prefix cannot be empty")
+        self.api_version = api_version if protocal is not None else ValueError(
+            "api_version cannot be empty")
 
     def _validate_file_type(self, value: str):
         """
@@ -59,7 +92,7 @@ class FileUtility:
     @authenticated_only
     def upload(self, file_type: str, uid: str, file: None):
         """
-            Upload file to file server
+            Upload file to mitlab file server
 
             Args:
                 file_type (str): the type of the file
@@ -77,21 +110,21 @@ class FileUtility:
             self.file_type = self._validate_file_type(file_type)
             formatted_actor_string = format_actor_string(self.file_type)
             response = requests.post(
-                url=f"{config['FILE_SERVER_PROTOCAL']}://{config['FILE_SERVER_HOST']}:{config['FILE_SERVER_PORT']}/{config['FILE_SERVER_API_PREFIX']}/{config['FILE_SERVER_API_VERSION']}/{MODULE_NAME}/{formatted_actor_string}FileManager/upload",
+                url=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{formatted_actor_string}FileManager/upload",
                 headers=DEFAULT_HEADER,
                 files=file
             )
             if response.status_code == 200:
-                return "File uploaded successfully"
+                return "File upload successfully"
             else:
-                return "File uploaded failed"
+                return "File upload failed"
         except Exception as e:
             return str(e)
 
     @authenticated_only
     def download(self, file_type: str, uid: str):
         """
-            Download file from file server
+            Download file from mitlab file server
 
             Args:
                 file_type (str): the type of the file
@@ -107,13 +140,13 @@ class FileUtility:
             self.file_type = self._validate_file_type(file_type)
             formatted_actor_string = format_actor_string(self.file_type)
             response = requests.post(
-                url=f"{config['FILE_SERVER_PROTOCAL']}://{config['FILE_SERVER_HOST']}:{config['FILE_SERVER_PORT']}/{config['FILE_SERVER_API_PREFIX']}/{config['FILE_SERVER_API_VERSION']}/{MODULE_NAME}/{formatted_actor_string}FileManager/download",
+                url=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{formatted_actor_string}FileManager/download",
                 headers=DEFAULT_HEADER,
                 json={f"{self.file_type}_uid": uid}
             )
             if response.status_code == 200:
                 return response
             else:
-                return "File downloaded failed"
+                return "File download failed"
         except Exception as e:
             return str(e)

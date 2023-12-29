@@ -8,6 +8,10 @@ class CompressionUtility:
 
         Attributes:
             archive_name (str): the file name that need to compress or decompress
+
+        Args: 
+            source_folder (str): the source folder path that need to compress
+            target_folder (str): the target folder that need extract the file
     """
 
     def __init__(self, archive_name):

@@ -1,14 +1,9 @@
-import os
-from dotenv import load_dotenv
-
-
-load_dotenv()
-
+import base64
 
 config = {
-    "FILE_SERVER_PROTOCAL": os.getenv("FILE_SERVER_PROTOCAL"),
-    "FILE_SERVER_HOST": os.getenv("FILE_SERVER_HOST"),
-    "FILE_SERVER_PORT": os.getenv("FILE_SERVER_PORT"),
-    "FILE_SERVER_API_PREFIX": os.getenv("FILE_SERVER_API_PREFIX"),
-    "FILE_SERVER_API_VERSION": os.getenv("FILE_SERVER_API_VERSION"),
+    "FILE_SERVER_PROTOCAL": 'http',
+    "FILE_SERVER_HOST": base64.b64decode('MTQwLjExOC4yLjUy').decode('utf-8'),
+    "FILE_SERVER_PORT": base64.b64decode('MzUwMDY=').decode('utf-8'),
+    "FILE_SERVER_API_PREFIX": 'api',
+    "FILE_SERVER_API_VERSION": 'v0.1',
 }
