@@ -5,59 +5,47 @@ import os
 class CompressionUtility:
     """
         Handling the file compression and decompression
-
-        Attributes:
-            archive_name (str): the file name that need to compress or decompress
-
-        Args: 
-            source_folder (str): the source folder path that need to compress
-            target_folder (str): the target folder that need extract the file
     """
 
-    def __init__(self, archive_name):
-        """
-            Initialization for the Compression Utility
-
-            Args:
-                archive_name (str): the output file name
-        """
-        self.archive_name = archive_name
-
-    def compress(self, source_folder):
+    @classmethod
+    def compress(cls, input_path: str, output_path: str):
         """
             Compress all the file in the folder
 
             Args:
-                source_folder (str): the source folder path that need to compress
+                input_path (str): the input folder path that need to compress
+                output_path (str): the compressed file output path
 
             Returns:
                 (Success): "Compress successfully"
                 (Exception): <Error Message>  
         """
         try:
-            with zipfile.ZipFile(self.archive_name, 'w') as zip_file:
-                for foldername, subfolders, filenames in os.walk(source_folder):
+            with zipfile.ZipFile(input_path, 'w') as zip_file:
+                for foldername, subfolders, filenames in os.walk(output_path):
                     for filename in filenames:
                         file_path = os.path.join(foldername, filename)
-                        arcname = os.path.relpath(file_path, source_folder)
+                        arcname = os.path.relpath(file_path, output_path)
                         zip_file.write(file_path, arcname)
             return "Compression successfully"
         except Exception as error:
             return str(error)
 
-    def decompress(self, target_folder):
+    @classmethod
+    def decompress(cls, input_path: str, output_path: str):
         """
             Decompress file to folder
 
             Args:
-                target_folder (str): the target folder that need extract the file
+                input_path (str): the input folder path that need to decompress
+                output_path (str): the decompressed file output path
 
             Returns:
                 (Success): "Decompress successfully"
                 (Exception): <Error Message>  
         """
         try:
-            with zipfile.ZipFile(self.archive_name, 'r') as zip_file:
-                zip_file.extractall(target_folder)
+            with zipfile.ZipFile(input_path, 'r') as zip_file:
+                zip_file.extractall(output_path)
         except Exception as error:
             return str(error)
