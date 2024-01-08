@@ -11,6 +11,6 @@ setup(
     author_email="mitlab6g.project@gmail.com",
     packages=find_packages(exclude=excluded_packages),
     description='MITLab AI/ML tools for pipeline development.',
-    install_requires=['requests', 'python-dotenv'],
+    install_requires=['requests'],
     python_requires='>=3'
 )
