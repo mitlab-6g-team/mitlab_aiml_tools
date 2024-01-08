@@ -23,10 +23,10 @@
 
     <!-- Initialization -->
     credential_server = CredentialServer(
-          host='<Credential Server IP>',
-          port='<Credential Server Port>',
+          host=<Credential Server IP>,
+          port=<Credential Server Port>,
           access_key=<Credential Access Key>,
-          secret_key=<<Credential Secret Key>>
+          secret_key=<Credential Secret Key>
         )
 
     file_manager = FileUtility(credential_manager=credential_server)
@@ -100,10 +100,10 @@
     LOGS_FILE_PATH = "./tests/logs/test_logs.txt"
 
         credential_server = CredentialServer(
-          host='<Credential Server IP>',
-          port='<Credential Server Port>',
+          host=<Credential Server IP>,
+          port=<Credential Server Port>,
           access_key=<Credential Access Key>,
-          secret_key=<<Credential Secret Key>>
+          secret_key=<Credential Secret Key>
         )
 
     logs_converter = LogsConverter(
