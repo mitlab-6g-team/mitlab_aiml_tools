@@ -13,7 +13,7 @@ class CompressionUtility:
             Compress all the file in the folder
 
             Args:
-                source_path (str): the input path that need to compress
+                source_path (str): the source path that need to compress
                 compressed_file_path (str): the compressed file output path
 
             Returns:
@@ -43,8 +43,8 @@ class CompressionUtility:
             Decompress file to folder
 
             Args:
-                compressed_file_path (str): the zip file that need to decompress
-                extract_path (str): the decompressed file output path
+                compressed_file_path (str): the compressed file path that need to decompress
+                extract_path (str): the path to extract file
 
             Returns:
                 (Success): "Decompress successfully"
