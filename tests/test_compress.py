@@ -10,11 +10,11 @@ class TestCompressUtility(unittest.TestCase):
 
     def test_compress(self):
         CompressionUtility.compress(
-            input_path=SOURCE_FOLDER_PATH, output_path=ARCHIVE_FILE_PATH)
+            source_path=SOURCE_FOLDER_PATH, zip_file_path=ARCHIVE_FILE_PATH)
 
     def test_decompress(self):
         CompressionUtility.decompress(
-            input_path=TARGET_FOLDER_PATH, output_path=TARGET_FOLDER_PATH)
+            zip_file_path=ARCHIVE_FILE_PATH, extract_path=TARGET_FOLDER_PATH)
 
 
 if __name__ == '__main__':

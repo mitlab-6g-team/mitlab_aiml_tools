@@ -1,5 +1,5 @@
-import zipfile
 import os
+import zipfile
 
 
 class CompressionUtility:
@@ -8,44 +8,54 @@ class CompressionUtility:
     """
 
     @classmethod
-    def compress(cls, input_path: str, output_path: str):
+    def compress(cls, source_path: str, zip_file_path: str):
         """
             Compress all the file in the folder
 
             Args:
-                input_path (str): the input folder path that need to compress
-                output_path (str): the compressed file output path
+                source_path (str): the input path that need to compress
+                zip_file_path (str): the compressed file output path
 
             Returns:
                 (Success): "Compress successfully"
                 (Exception): <Error Message>  
         """
         try:
-            with zipfile.ZipFile(input_path, 'w') as zip_file:
-                for foldername, subfolders, filenames in os.walk(output_path):
-                    for filename in filenames:
-                        file_path = os.path.join(foldername, filename)
-                        arcname = os.path.relpath(file_path, output_path)
-                        zip_file.write(file_path, arcname)
-            return "Compression successfully"
+            with zipfile.ZipFile(zip_file_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                if os.path.isdir(source_path):
+                    for root, dirs, files in os.walk(source_path):
+                        for file in files:
+                            file_path = os.path.join(root, file)
+                            arcname = os.path.relpath(
+                                file_path, os.path.dirname(source_path))
+                            zipf.write(file_path, arcname)
+                elif os.path.isfile(source_path):
+                    zipf.write(source_path, os.path.basename(source_path))
+                else:
+                    raise FileNotFoundError(f"Path not exist: {source_path}")
+            return "Compress successfully"
         except Exception as error:
             return str(error)
 
     @classmethod
-    def decompress(cls, input_path: str, output_path: str):
+    def decompress(cls, zip_file_path: str, extract_path: str):
         """
             Decompress file to folder
 
             Args:
-                input_path (str): the input folder path that need to decompress
-                output_path (str): the decompressed file output path
+                zip_file_path (str): the zip file that need to decompress
+                extract_path (str): the decompressed file output path
 
             Returns:
                 (Success): "Decompress successfully"
                 (Exception): <Error Message>  
         """
         try:
-            with zipfile.ZipFile(input_path, 'r') as zip_file:
-                zip_file.extractall(output_path)
+            if not os.path.isfile(zip_file_path):
+                raise FileNotFoundError(f"zip file not exist: {zip_file_path}")
+
+            with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+                zip_ref.extractall(extract_path)
+            return "Decompress successfully"
         except Exception as error:
             return str(error)
