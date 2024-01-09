@@ -8,20 +8,20 @@ class CompressionUtility:
     """
 
     @classmethod
-    def compress(cls, source_path: str, zip_file_path: str):
+    def compress(cls, source_path: str, compressed_file_path: str):
         """
             Compress all the file in the folder
 
             Args:
                 source_path (str): the input path that need to compress
-                zip_file_path (str): the compressed file output path
+                compressed_file_path (str): the compressed file output path
 
             Returns:
                 (Success): "Compress successfully"
                 (Exception): <Error Message>  
         """
         try:
-            with zipfile.ZipFile(zip_file_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            with zipfile.ZipFile(compressed_file_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
                 if os.path.isdir(source_path):
                     for root, dirs, files in os.walk(source_path):
                         for file in files:
@@ -38,12 +38,12 @@ class CompressionUtility:
             return str(error)
 
     @classmethod
-    def decompress(cls, zip_file_path: str, extract_path: str):
+    def decompress(cls, compressed_file_path: str, extract_path: str):
         """
             Decompress file to folder
 
             Args:
-                zip_file_path (str): the zip file that need to decompress
+                compressed_file_path (str): the zip file that need to decompress
                 extract_path (str): the decompressed file output path
 
             Returns:
@@ -51,10 +51,11 @@ class CompressionUtility:
                 (Exception): <Error Message>  
         """
         try:
-            if not os.path.isfile(zip_file_path):
-                raise FileNotFoundError(f"zip file not exist: {zip_file_path}")
+            if not os.path.isfile(compressed_file_path):
+                raise FileNotFoundError(
+                    f"zip file not exist: {compressed_file_path}")
 
-            with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+            with zipfile.ZipFile(compressed_file_path, 'r') as zip_ref:
                 zip_ref.extractall(extract_path)
             return "Decompress successfully"
         except Exception as error:
