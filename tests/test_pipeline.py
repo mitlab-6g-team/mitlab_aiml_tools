@@ -13,9 +13,9 @@ CREDENTIAL_SECRET_KEY = 'test12345'
 # Test data
 FILE_TYPE = 'model'
 MODEL_PATH = 'test_model.h5'
-MODEL_DOWNLOAD_EXAMPLE_UID = '3c20d028-e24f-c9e1-5f73-faa8e47970d3'
+MODEL_DOWNLOAD_EXAMPLE_UID = 'cf16e521-6df2-457a-88df-58535642155e'
 ORIGINAL_DATASET_PATH = 'test_original_dataset.tar.gz'
-ORIGINAL_DATASET_EXAMPLE_UID = '04460272-06c2-6492-a7dc-ebf50b08cc00'
+ORIGINAL_DATASET_EXAMPLE_UID = '6190b205-f246-40b0-bd94-fd2719f64ca1'
 
 credential_server = CredentialServer(
     host=CREDENTIAL_SERVER_HOST,
@@ -30,11 +30,11 @@ file_manager = FileUtility(credential_manager=credential_server)
 class TestFileUtility(unittest.TestCase):
 
     def test_download(self):
-        res = file_manager.download(
+        file_data = file_manager.download(
             file_type=FILE_TYPE, uid=MODEL_DOWNLOAD_EXAMPLE_UID
         )
         with open(MODEL_PATH, 'wb') as file:
-            file.write(res.content)
+            file.write(file_data)
 
     def test_upload(self):
         with open(MODEL_PATH, 'rb') as file:
