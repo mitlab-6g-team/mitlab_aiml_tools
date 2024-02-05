@@ -11,5 +11,5 @@ config = {
     "PIPELINE_FILE_EXTENSION": "py",
     "IMAGE_FILE_EXTENSION": "",
     "LOGS_FILE_EXTENSION": "txt",
-    "MODEL_FILE_EXTENSION": "h5"
+    "MODEL_FILE_EXTENSION": "tar.gz"
 }
