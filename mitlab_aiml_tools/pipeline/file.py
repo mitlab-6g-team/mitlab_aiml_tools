@@ -162,7 +162,6 @@ class FileUtility:
         try:
             file_type = self._validate_file_type(file_type)
             file_extension = self._select_file_extension(file_type)
-            print(file_extension)
             formatted_actor_string = format_actor_string(file_type)
             response = requests.post(
                 url=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{formatted_actor_string}FileManager/download",
