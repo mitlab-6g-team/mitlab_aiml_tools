@@ -16,9 +16,9 @@ CREDENTIAL_ACCESS_KEY = 'test'
 CREDENTIAL_SECRET_KEY = 'test12345'
 # Example
 MODEL_PATH = 'test_model.zip'
-MODEL_EXAMPLE_UID = '46ff78ad-acdc-4135-b0eb-194a9e1d569c'
+MODEL_EXAMPLE_UID = '033ace30-0128-4fdc-a197-75ccb2e291f9'
 ORIGINAL_DATASET_PATH = 'test_original_dataset.zip'
-ORIGINAL_DATASET_EXAMPLE_UID = '5a05dda5-df1f-4719-b5f4-0da30d9ce092'
+ORIGINAL_DATASET_EXAMPLE_UID = 'd42b4b1c-5b00-421b-b62b-cf83482ce714'
 
 credential_server = CredentialServer(
     host=CREDENTIAL_SERVER_HOST,
@@ -35,11 +35,14 @@ class TestFileUtility(unittest.TestCase):
         "EXAMPLE_UID": MODEL_EXAMPLE_UID, "PATH": MODEL_PATH}
 
     def test_download(self):
-        file_data = file_manager.download(
+        downloaded_response = file_manager.download(
             file_type=FILE_TYPE, uid=self.TEST_CONFIG['EXAMPLE_UID']
         )
         with open(self.TEST_CONFIG['PATH'], 'wb') as file:
-            file.write(file_data)
+            if downloaded_response.ok:
+                file.write(downloaded_response.content)
+            else:
+                print("File downloaded failed")
 
     def test_upload(self):
         with open(self.TEST_CONFIG['PATH'], 'rb') as file:

@@ -168,9 +168,6 @@ class FileUtility:
                 headers=DEFAULT_HEADER,
                 json={f"{file_type}_uid": f"{uid}.{file_extension}"}
             )
-            if response.status_code == 200:
-                return response.content
-            else:
-                return "File download failed"
+            return response
         except Exception as e:
             return str(e)
