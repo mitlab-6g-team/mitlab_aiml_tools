@@ -9,7 +9,7 @@ CREDENTIAL_ACCESS_KEY = 'test'
 CREDENTIAL_SECRET_KEY = 'test12345'
 
 # Test data
-LOGS_FILE_PATH = "./tests/logs/test_logs.txt"
+LOG_FILE_PATH = "./tests/log/test_log.txt"
 TEST_LOG_CONTENT = "[INFO] time: 2023-11-23 12:14:04, module: pipeline_task, actor: PreprocessingTaskWorker, function: start, payload: {'preprocessing_pipeline_uid': '2979d7a4-7b98-49c2-b6b2-2bf0d6b5c1e9'}"
 
 credential_server = CredentialServer(
@@ -19,13 +19,13 @@ credential_server = CredentialServer(
     secret_key=CREDENTIAL_SECRET_KEY
 )
 
-logs_converter = LogsConverter(
-    credential_manager=credential_server, log_file_path=LOGS_FILE_PATH)
+log_converter = LogsConverter(
+    credential_manager=credential_server, log_file_path=LOG_FILE_PATH)
 
 
 class TestLogsConverter(unittest.TestCase):
     def test_convert(self):
-        res = logs_converter.covert(TEST_LOG_CONTENT)
+        res = log_converter.covert(TEST_LOG_CONTENT)
         print(res)
 
 

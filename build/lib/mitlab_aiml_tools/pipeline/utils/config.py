@@ -7,12 +7,6 @@ config = {
     "FILE_SERVER_API_PREFIX": 'api',
     "FILE_SERVER_API_VERSION": 'v0.1',
 
-    "ENTRY_SEVER_PROTCAL": 'http',
-    "ENTRY_SEVER_HOST": '',
-    "ENTRY_SEVER_PORT": '',
-    "ENTRY_SEVER_API_PREFIX": '',
-    "ENTRY_SEVER_API_VERSION": '',
-
     "DATASET_FILE_EXTENSION": "zip",
     "PIPELINE_FILE_EXTENSION": "py",
     "IMAGE_FILE_EXTENSION": "",

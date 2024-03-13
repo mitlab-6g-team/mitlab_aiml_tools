@@ -79,17 +79,17 @@
     ```
 
 - ### Logging:
-    Converting text logs into log files and storing them in the file system **(authentication required)**.
+    Converting text log into log files and storing them in the file system **(authentication required)**.
 
     ```
-    Handling the conversion of string to logs file and upload logs file to file server
+    Handling the conversion of string to log file and upload log file to file server
 
         Attributes:
             credential_manager (class): credential manager for authenticatication
-            log_file_path (str): the logs file_path
+            log_file_path (str): the log file_path
 
         Args: 
-            input_string (str): the input strining need to convert to logs file
+            input_string (str): the input strining need to convert to log file
     ```
 
     ```
@@ -97,7 +97,7 @@
     from mitlab_aiml_tools.pipeline.logging import LogsConverter
 
     <!-- Initialization -->
-    LOGS_FILE_PATH = "./tests/logs/test_logs.txt"
+    LOG_FILE_PATH = "./tests/log/test_log.txt"
 
         credential_server = CredentialServer(
           host=<Credential Server IP>,
@@ -106,11 +106,11 @@
           secret_key=<Credential Secret Key>
         )
 
-    logs_converter = LogsConverter(
-        credential_manager=credential_server, log_file_path=LOGS_FILE_PATH)
+    log_converter = LogsConverter(
+        credential_manager=credential_server, log_file_path=LOG_FILE_PATH)
 
     <!-- Usage -->
 
     # Covert string to log file
-     logs_converter.convert(TEST_LOG_CONTENT)
+     log_converter.convert(TEST_LOG_CONTENT)
     ```
