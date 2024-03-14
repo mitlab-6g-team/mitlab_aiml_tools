@@ -18,7 +18,7 @@ CREDENTIAL_SECRET_KEY = 'test12345'
 MODEL_PATH = 'test_model.zip'
 MODEL_EXAMPLE_UID = '033ace30-0128-4fdc-a197-75ccb2e291f9'
 ORIGINAL_DATASET_PATH = 'test_original_dataset.zip'
-ORIGINAL_DATASET_EXAMPLE_UID = 'd42b4b1c-5b00-421b-b62b-cf83482ce714'
+ORIGINAL_DATASET_EXAMPLE_UID = '0409f629-a39a-5451-9f14-08cc10f8a3ce'
 
 credential_server = CredentialServer(
     host=CREDENTIAL_SERVER_HOST,

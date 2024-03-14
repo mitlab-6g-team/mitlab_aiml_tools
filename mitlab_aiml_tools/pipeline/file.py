@@ -89,29 +89,6 @@ class FileUtility:
         else:
             return value
 
-    def _select_file_extension(self, value):
-        """
-            select file extension for uploading file and downloading file
-
-            Args:
-                value (str): the value the need to validate
-                (Allowed values: original_dataset, training_dataset, preprocessing_pipeline, preprocessing_log, preprocessing_image, training_pipeline, training_log, training_image, model)
-
-            Returns:
-                (Success): <File Name String>
-                (Failed): Raise Value Error
-        """
-        if value in ['original_dataset', 'training_dataset']:
-            return config['DATASET_FILE_EXTENSION']
-        elif value in ['preprocessing_pipeline', 'training_pipeline']:
-            return config['PIPELINE_FILE_EXTENSION']
-        elif value in ['preprocessing_log', 'training_log']:
-            return config['LOG_FILE_EXTENSION']
-        elif value in ['preprocessing_image', 'training_image']:
-            return config['IMAGE_FILE_EXTENSION']
-        elif value in ['model']:
-            return config['MODEL_FILE_EXTENSION']
-
     @authenticated_only
     def upload(self, file_type: str, uid: str, file: None):
         """
@@ -130,11 +107,10 @@ class FileUtility:
         """
         try:
             file_type = self._validate_file_type(file_type)
-            file_extension = self._select_file_extension(file_type)
             formatted_actor_string = format_actor_string(file_type)
             response = requests.post(
                 url=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{formatted_actor_string}FileManager/upload",
-                headers={"Uid": f"{str(uid)}.{file_extension}"},
+                headers={"Uid": str(uid)},
                 files=file
             )
             if response.status_code == 200:
@@ -161,12 +137,11 @@ class FileUtility:
         DEFAULT_HEADER = {"Content-Type": "application/json"}
         try:
             file_type = self._validate_file_type(file_type)
-            file_extension = self._select_file_extension(file_type)
             formatted_actor_string = format_actor_string(file_type)
             response = requests.post(
                 url=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{formatted_actor_string}FileManager/download",
                 headers=DEFAULT_HEADER,
-                json={f"{file_type}_uid": f"{uid}.{file_extension}"}
+                json={f"{file_type}_uid": uid}
             )
             return response
         except Exception as e:
