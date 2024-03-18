@@ -4,7 +4,7 @@ excluded_packages = ["docs", "tests", "tests.*"]
 
 setup(
     name='mitlab_aiml_tools',
-    version='0.1.0',
+    version='0.1.1',
     author="MITLAB",
     license='MIT License',
     url='https://github.com/mitlab-6g-team/mitlab_aiml_tools.git',
