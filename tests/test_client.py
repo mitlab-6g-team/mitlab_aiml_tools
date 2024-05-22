@@ -2,10 +2,7 @@ import unittest
 from mitlab_aiml_tools.auth.credential import CredentialServer
 
 HOST = "192.168.190.150"
-PORT = '40678'
-API_ROOT = 'api'
-API_VERSION = 'v0.1'
-API_PREFIX = 'metadata'
+PORT = '50000'
 HTTPS = False
 
 ACCESS_KEY = 'test'
@@ -18,9 +15,6 @@ class TestCredentialManager(unittest.TestCase):
         credential_manager = CredentialServer(
             host=HOST,
             port=PORT,
-            api_root=API_ROOT,
-            api_version=API_VERSION,
-            api_prefix=API_PREFIX,
             access_key=ACCESS_KEY,
             secret_key=SECRET_KEY,
             https=HTTPS

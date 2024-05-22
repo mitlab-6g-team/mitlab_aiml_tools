@@ -45,8 +45,10 @@ class CredentialServer:
             res = requests.post(
                 url=api_url,
                 json={"account_name": self.access_key,
-                      "account_password": self.secret_key})
+                      "password": self.secret_key})
+            print(res)
             if res.status_code == 200:
+                print("great")
                 self._credentials = res.json()
             else:
                 raise PermissionError("Authentication failed")
