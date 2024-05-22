@@ -23,7 +23,7 @@ class CredentialServer:
                  https=False,
                  api_root='api',
                  api_version='v0.1',
-                 api_prefix='metadata'):
+                 api_prefix='entrypoint'):
         self.host = host
         self.port = port
         self.access_key = access_key
