@@ -90,7 +90,7 @@ class MetricUtility:
         if model_type not in MODEL_METRICS:
             raise ValueError(f"Invalid model_type '{model_type}'. Allowed types are {', '.join(MODEL_METRICS.keys())}.")
 
-        for metric_key in metrics.keys():
+        for metric_key in metric.keys():
             if metric_key not in MODEL_METRICS[model_type]:
                 raise ValueError(f"Invalid metric '{metric_key}' for model_type '{model_type}'. Allowed metrics are {', '.join(MODEL_METRICS[model_type])}.")
     
