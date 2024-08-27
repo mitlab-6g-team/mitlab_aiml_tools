@@ -114,9 +114,9 @@ class MetricUtility:
             
             self._validate_type(model_uid,str)
             self._validate_type(model_accuracy,float)
-            print(f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/ModelMetadataWriter/update")
+            #print(f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/ModelMetadataWriter/update")
             response = requests.post(
-                url=f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/ModelMetadataWriter/update",
+                url=f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/ModelAccuracyManager/create",
                 json={
                     "model_uid": model_uid,
                     "model_accuracy":model_accuracy
