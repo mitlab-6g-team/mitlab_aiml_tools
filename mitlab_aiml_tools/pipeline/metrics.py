@@ -51,20 +51,28 @@ class MetricUtility:
         self.api_version = api_version if protocal is not None else ValueError(
             "api_version cannot be empty")
 
-    def _validate_type(self,value,expect_type):
+    def _validate_type(self, value, expect_type):
         """
         Validate the type of a given value.
 
         Args:
             value: The value to check.
-            expected_type: The type that value is expected to be.
-    
+            expect_type: The type that value is expected to be.
+        
         Returns:
             bool: True if the value matches the expected type.
 
         Raises:
             TypeError: If the value does not match the expected type.
+            ValueError: If value or expect_type is None.
         """
+
+
+        if expect_type is None or not isinstance(expect_type, type):
+            raise TypeError("Expected a valid type for 'expect_type', but got None or an invalid type.")
+
+        if value is None:
+            raise ValueError("The value cannot be None.")
 
         if isinstance(value, expect_type):
             return True
@@ -78,7 +86,7 @@ class MetricUtility:
 
         Args:
             model_type (str): The type of the model (e.g., 'classification', 'regression').
-            metrics (dict): A dictionary where keys are metrics to validate.
+            metrics (dict): A dictionary where keys are metrics to validagit te.
 
         Returns:
             bool: True if all keys in the metrics dictionary are valid for the model type.

@@ -1,11 +1,10 @@
 import requests
 from .utils.config import config
-from .utils.tools import format_actor_string
 from ..auth.credential import authenticated_only
 from ..auth.credential import CredentialServer
 
 
-MODULE_NAME = 'file_operation'
+MODULE_NAME = 'pipeline_operation'
 
 ALLOWED_TYPE_DICT = {
     'original_dataset': 'OriginalDataset',
@@ -70,58 +69,90 @@ class FileUtility:
         self.api_version = api_version if protocal is not None else ValueError(
             "api_version cannot be empty")
 
-    def _validate_file_type(self, value: str):
+    def _validate_file_type(self, type: str):
         """
             Validate whether the file type is legal or not
 
             Args:
                 value (str): the value the need to validate
-                (Allowed values: original_dataset, training_dataset, preprocessing_pipeline, preprocessing_log, preprocessing_image, training_pipeline, training_log, training_image, mode)
+                (allowed values: original_dataset, training_dataset , model)
 
             Returns:
                 (Success): <File Type String>
                 (Failed): Raise Value Error
 
         """
-        if value not in ALLOWED_TYPE_DICT.keys():
-            raise ValueError(
-                f"Invalid value for 'file_type'. Allowed types are {', '.join(ALLOWED_TYPE_DICT.keys())}")
+
+        allow_type=['model','dataset']
+
+        if type not in allow_type:
+            return False , f"invalid file_type, allowed types are {', '.join(ALLOWED_TYPE_DICT.keys())}"
+        return True , "great"
+
+    def _validate_type(self, value, expect_type):
+        """
+        Validate the type of a given value.
+
+        Args:
+            value: The value to check.
+            expect_type: The type that value is expected to be.
+        
+        Returns:
+            bool: True if the value matches the expected type.
+
+        Raises:
+            TypeError: If the value does not match the expected type.
+            ValueError: If value or expect_type is None.
+        """
+
+
+        if expect_type is None or not isinstance(expect_type, type):
+            raise TypeError("Expected a valid type for 'expect_type', but got None or an invalid type.")
+
+        if value is None:
+            raise ValueError("The value cannot be None.")
+
+        if isinstance(value, expect_type):
+            return True
         else:
-            return value
+            raise TypeError(f"Expected type {expect_type.__name__}, but got type {type(value).__name__}")
 
     @authenticated_only
-    def upload(self, file_type: str, uid: str, file: None):
+    def upload(self, file_type: str, file=None):
         """
-            Upload file to mitlab file server
+        Upload file to mitlab file server.
 
-            Args:
-                file_type (str): the type of the file
-                uid (str): the UID value for the file
-                file (file): the file that needed to upload
+        Args:
+            file_type (str): The type of the file.
+            file (file): The file that needs to be uploaded.
 
-            Returns:
-                (Success) : "File uploaded successfully"
-                (Failed) : "File uploaded failed"
-                (Exception): <Error Message>
-
+        Returns:
+            str: "File uploaded successfully" on success.
+            str: "File upload failed" on failure.
+            str: <Error Message> on exception.
         """
         try:
-            file_type = self._validate_file_type(file_type)
-            formatted_actor_string = format_actor_string(file_type)
-            response = requests.post(
-                url=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{formatted_actor_string}FileManager/upload",
-                headers={"Uid": str(uid)},
-                files=file
-            )
+            # Validate the file type
+            is_success, return_message = self._validate_file_type(file_type)
+            if not is_success:
+                raise ValueError(return_message)
+            
+            # Construct the upload URL
+            url = f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/GeneralFileManager/upload"
+
+            # Perform the file upload
+            response = requests.post(url=url, files=file)
+            
+            # Check response status
             if response.status_code == 200:
-                return "File upload successfully"
+                return "File uploaded successfully"
             else:
                 return "File upload failed"
         except Exception as e:
             return str(e)
 
     @authenticated_only
-    def download(self, file_type: str, uid: str):
+    def download(self, file_type:str,**kwargs):
         """
             Download file from mitlab file server
 
@@ -134,14 +165,32 @@ class FileUtility:
                 (Failed): "File downloaded failed"
                 (Exception): <Error Message>
         """
-        DEFAULT_HEADER = {"Content-Type": "application/json"}
+        default_header = {"Content-Type": "application/json"}
+
         try:
-            file_type = self._validate_file_type(file_type)
-            formatted_actor_string = format_actor_string(file_type)
+            is_success, return_message = self._validate_file_type(file_type)
+            if not is_success:
+                raise ValueError(return_message)
+            
+            for key, value in kwargs.items():
+                self._validate_type(value, str)
+
+            urls=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{"AuthFileManager" if file_type == "model" else "GeneralFileManager"}/download"
+            
+            request={}
+            if file_type == "model" :
+                request["model_uid"] = kwargs.get("model_uid")
+                request["model_access_token"] = kwargs.get("model_access_token")
+            else:
+                request["file_path"] = kwargs.get("file_uid")
+
+            if not all(request.values()):
+                raise ValueError("Missing required parameters for the file type.")
+
             response = requests.post(
-                url=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{formatted_actor_string}FileManager/download",
-                headers=DEFAULT_HEADER,
-                json={f"{file_type}_uid": uid}
+                url=urls,
+                headers=default_header,
+                json=request
             )
             return response
         except Exception as e:
