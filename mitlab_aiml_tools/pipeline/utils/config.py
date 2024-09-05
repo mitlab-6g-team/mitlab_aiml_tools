@@ -2,7 +2,7 @@ import base64
 
 config = {
     "FILE_SERVER_PROTOCAL": 'http',
-    "FILE_SERVER_HOST": "140.118.2.52",
+    "FILE_SERVER_HOST": "140.118.122.164",
     "FILE_SERVER_PORT": "34804",
     "FILE_SERVER_API_PREFIX": 'api',
     "FILE_SERVER_API_VERSION": 'v1.1.1',
