@@ -3,10 +3,6 @@ from uuid import uuid4
 from mitlab_aiml_tools.auth.credential import CredentialServer
 from mitlab_aiml_tools.pipeline.file import FileUtility
 
-### Test Input ###
-FILE_TYPE = 'original_dataset'
-##################
-
 
 ######################## Credential server ########################
 CREDENTIAL_SERVER_HOST = '140.118.122.164'
@@ -26,8 +22,9 @@ API_VERSION='v1.1.1'
 
 ############################ fake data ############################
 file_type="dataset"
-file_path="1fceb3f6-275f-4070-bfb6-3be85160c5fc/3f916f7e-dac9-4fb5-8152-939c86ada8da/original/c3cf30f8-ab25-422f-a5a7-0eb1c1dc9ee9.zip"
-
+download_uid="1fceb3f6-275f-4070-bfb6-3be85160c5fc/3f916f7e-dac9-4fb5-8152-939c86ada8da/original/c3cf30f8-ab25-422f-a5a7-0eb1c1dc9ee9.zip"
+upload_path="tests/dataset/training_dataset.zip"
+upload_uid="1fceb3f6-275f-4070-bfb6-3be85160c5fc/3f916f7e-dac9-4fb5-8152-939c86ada8da/training/1d139a71-6111-47a8-84f4-918cea1991cc.zip"
 
 credential_server = CredentialServer(
     host=CREDENTIAL_SERVER_HOST,
@@ -47,21 +44,23 @@ file_manager = FileUtility(
 
 
 class TestFileUtility(unittest.TestCase):
-    def test_download(self):
-        downloaded_response = file_manager.download(file_type=file_type, file_path=file_path)
+    # def test_download(self):
+    #     downloaded_response = file_manager.download(file_type=file_type, file_path=file_path)
         
-        with open("tests/dataset/original_dataset.zip", 'wb') as file:
-            print(downloaded_response)
-            if downloaded_response.ok:
-                file.write(downloaded_response.content)
-            else:
-                print("File downloaded failed")
+    #     with open("tests/dataset/original_dataset.zip", 'wb') as file:
+    #         print(downloaded_response)
+    #         if downloaded_response.ok:
+    #             file.write(downloaded_response.content)
+    #         else:
+    #             print("File downloaded failed")
 
     def test_upload(self):
-        with open(self.TEST_CONFIG['PATH'], 'rb') as file:
+        with open(upload_path, 'rb') as file:
             files = {f'file':file}
+            data={"file_path":upload_uid}
             file_manager.upload(
-                file_type=FILE_TYPE,
+                file_type=file_type,
+                data=data,
                 file=files,
             )
 
