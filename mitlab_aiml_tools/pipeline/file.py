@@ -175,14 +175,15 @@ class FileUtility:
             for key, value in kwargs.items():
                 self._validate_type(value, str)
 
-            urls=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{"AuthFileManager" if file_type == "model" else "GeneralFileManager"}/download"
             
+            urls=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{'AuthFileManager' if file_type == 'model' else 'GeneralFileManager'}/download"
+            print(urls)
             request={}
             if file_type == "model" :
                 request["model_uid"] = kwargs.get("model_uid")
                 request["model_access_token"] = kwargs.get("model_access_token")
-            else:
-                request["file_path"] = kwargs.get("file_uid")
+            elif file_type == "dataset":
+                request["file_path"] = kwargs.get("file_path")
 
             if not all(request.values()):
                 raise ValueError("Missing required parameters for the file type.")

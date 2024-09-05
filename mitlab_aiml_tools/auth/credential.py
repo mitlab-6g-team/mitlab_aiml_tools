@@ -46,7 +46,6 @@ class CredentialServer:
                 url=api_url,
                 json={"account_name": self.access_key,
                       "password": self.secret_key})
-            print(res)
             if res.status_code == 200:
                 print("great")
                 self._credentials = res.json()

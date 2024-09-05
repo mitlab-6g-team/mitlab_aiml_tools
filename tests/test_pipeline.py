@@ -13,8 +13,15 @@ CREDENTIAL_SERVER_HOST = '140.118.122.164'
 CREDENTIAL_SERVER_PORT = '34801'
 CREDENTIAL_ACCESS_KEY = 'user_1'
 CREDENTIAL_SECRET_KEY = 'test'
-PROTOCAL=False
-API_PREFIX='entrypoint'
+# PROTOCAL='http'
+# API_PREFIX='entrypoint'
+# API_VERSION='v1.1.1'
+
+######################## data server ########################
+DATA_SERVER_HOST = '140.118.122.164'
+DATA_SERVER_PORT = '34804'
+PROTOCAL='http'
+API_PREFIX='api'
 API_VERSION='v1.1.1'
 
 ############################ fake data ############################
@@ -29,28 +36,34 @@ credential_server = CredentialServer(
     secret_key=CREDENTIAL_SECRET_KEY
 )
 
-file_manager = FileUtility(credential_manager=credential_server)
+file_manager = FileUtility(
+        credential_manager=credential_server,
+        host=DATA_SERVER_HOST,
+        port=DATA_SERVER_PORT,
+        protocal=PROTOCAL,
+        api_prefix=API_PREFIX,
+        api_version=API_VERSION
+    )
 
 
 class TestFileUtility(unittest.TestCase):
     def test_download(self):
-        downloaded_response = file_manager.download(
-            file_type=file_type, file_path=file_path
-        )
-        with open("dataset/original_dataset.csv", 'wb') as file:
+        downloaded_response = file_manager.download(file_type=file_type, file_path=file_path)
+        
+        with open("tests/dataset/original_dataset.zip", 'wb') as file:
+            print(downloaded_response)
             if downloaded_response.ok:
                 file.write(downloaded_response.content)
             else:
                 print("File downloaded failed")
 
-    # def test_upload(self):
-    #     with open(self.TEST_CONFIG['PATH'], 'rb') as file:
-    #         files = {f'{FILE_TYPE}_file': (self.TEST_CONFIG['PATH'], file)}
-    #         file_manager.upload(
-    #             file_type=FILE_TYPE,
-    #             uid=uuid4(),
-    #             file=files,
-    #         )
+    def test_upload(self):
+        with open(self.TEST_CONFIG['PATH'], 'rb') as file:
+            files = {f'file':file}
+            file_manager.upload(
+                file_type=FILE_TYPE,
+                file=files,
+            )
 
 
 if __name__ == '__main__':

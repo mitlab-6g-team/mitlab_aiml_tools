@@ -2,10 +2,10 @@ import base64
 
 config = {
     "FILE_SERVER_PROTOCAL": 'http',
-    "FILE_SERVER_HOST": base64.b64decode('MzUuMTg3Ljg3LjIyMw==').decode('utf-8'),
-    "FILE_SERVER_PORT": base64.b64decode('Mzc0MDM=').decode('utf-8'),
+    "FILE_SERVER_HOST": "140.118.2.52",
+    "FILE_SERVER_PORT": "34804",
     "FILE_SERVER_API_PREFIX": 'api',
-    "FILE_SERVER_API_VERSION": 'v0.1',
+    "FILE_SERVER_API_VERSION": 'v1.1.1',
 
     "ENTRY_SEVER_PROTCAL": 'http',
     "ENTRY_SEVER_HOST": '',
