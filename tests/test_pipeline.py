@@ -60,10 +60,10 @@ class TestFileUtility(unittest.TestCase):
     # def test_upload(self):
     #     with open(upload_path, 'rb') as file:
     #         files = {"file":file}
-    #         data={"file_path":upload_uid}
+    #         file_path={"file_path":upload_uid}
     #         file_manager.upload(
     #             file_type=file_type,
-    #             data=data,
+    #             file_path=file_path,
     #             file=files,
     #         )
     # def test_download_model(self):
