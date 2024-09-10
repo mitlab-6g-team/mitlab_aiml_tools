@@ -5,8 +5,10 @@ Pipfile.lock
 # Test
 test_model.h5
 test_original_dataset.tar.gz
+tests/
 
 # gitignore
 build/ 
 dist/
 mitlab_aiml_tools.egg-info/
+.venv/

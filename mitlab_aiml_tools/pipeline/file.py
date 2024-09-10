@@ -140,7 +140,6 @@ class FileUtility:
             # Construct the upload URL
             url = f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/GeneralFileManager/upload"
             
-            print("file:"+file)
             print("file_path:"+file_path)
 
             # Perform the file upload
