@@ -7,7 +7,7 @@ from mitlab_aiml_tools.pipeline.file import FileUtility
 ######################## Credential server ########################
 CREDENTIAL_SERVER_HOST = '140.118.122.164'
 CREDENTIAL_SERVER_PORT = '34801'
-CREDENTIAL_ACCESS_KEY = 'user_1'
+CREDENTIAL_ACCESS_KEY = 'user1'
 CREDENTIAL_SECRET_KEY = 'test'
 # PROTOCAL='http'
 # API_PREFIX='entrypoint'
@@ -57,15 +57,14 @@ class TestFileUtility(unittest.TestCase):
     #         else:
     #             print("File downloaded failed")
 
-    # def test_upload(self):
-    #     with open(upload_path, 'rb') as file:
-    #         files = {"file":file}
-    #         file_path={"file_path":upload_uid}
-    #         file_manager.upload(
-    #             file_type=file_type,
-    #             file_path=file_path,
-    #             file=files,
-    #         )
+    def test_upload_model(self):
+        with open(upload_path, 'rb') as file:
+            files = {"file":file}
+        file_manager.upload(
+            file_type="model",
+            file_path={"file_path":upload_uid},
+            file=files,
+        )
     # def test_download_model(self):
     #     with open(upload_path, 'rb') as file:
     #         files = {f'file':file}
