@@ -177,7 +177,6 @@ class FileUtility:
 
             
             urls=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{'AuthFileManager' if file_type == 'model' else 'GeneralFileManager'}/download"
-            print(urls)
             request={}
             if file_type == "model" :
                 request["model_uid"] = kwargs.get("model_uid")

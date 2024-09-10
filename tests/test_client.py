@@ -1,12 +1,12 @@
 import unittest
 from mitlab_aiml_tools.auth.credential import CredentialServer
 
-HOST = "192.168.190.150"
-PORT = '50000'
+HOST = "140.118.122.164"
+PORT = '34801'
 HTTPS = False
 
-ACCESS_KEY = 'test'
-SECRET_KEY = 'test12345'
+ACCESS_KEY = 'user_1'
+SECRET_KEY = 'test'
 
 
 class TestCredentialManager(unittest.TestCase):

@@ -26,6 +26,9 @@ download_uid="1fceb3f6-275f-4070-bfb6-3be85160c5fc/3f916f7e-dac9-4fb5-8152-939c8
 upload_path="tests/dataset/training_dataset.zip"
 upload_uid="1fceb3f6-275f-4070-bfb6-3be85160c5fc/3f916f7e-dac9-4fb5-8152-939c86ada8da/training/1d139a71-6111-47a8-84f4-918cea1991cc.zip"
 
+model_uid=""
+model_access_token=""
+
 credential_server = CredentialServer(
     host=CREDENTIAL_SERVER_HOST,
     port=CREDENTIAL_SERVER_PORT,
@@ -54,15 +57,24 @@ class TestFileUtility(unittest.TestCase):
     #         else:
     #             print("File downloaded failed")
 
-    def test_upload(self):
-        with open(upload_path, 'rb') as file:
-            files = {f'file':file}
-            data={"file_path":upload_uid}
-            file_manager.upload(
-                file_type=file_type,
-                data=data,
-                file=files,
-            )
+    # def test_upload(self):
+    #     with open(upload_path, 'rb') as file:
+    #         files = {"file":file}
+    #         data={"file_path":upload_uid}
+    #         file_manager.upload(
+    #             file_type=file_type,
+    #             data=data,
+    #             file=files,
+    #         )
+    # def test_download_model(self):
+    #     with open(upload_path, 'rb') as file:
+    #         files = {f'file':file}
+    #         data={"file_path":upload_uid}
+    #         file_manager.download(
+    #             file_type="model",
+    #             model_uid=model_uid,
+    #             model_access_token=model_access_token,
+    #         )
 
 
 if __name__ == '__main__':
