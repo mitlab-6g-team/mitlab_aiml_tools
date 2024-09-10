@@ -26,8 +26,12 @@ download_uid="1fceb3f6-275f-4070-bfb6-3be85160c5fc/3f916f7e-dac9-4fb5-8152-939c8
 upload_path="tests/dataset/training_dataset.zip"
 upload_uid="1fceb3f6-275f-4070-bfb6-3be85160c5fc/3f916f7e-dac9-4fb5-8152-939c86ada8da/training/1d139a71-6111-47a8-84f4-918cea1991cc.zip"
 
-model_uid=""
-model_access_token=""
+download_training_dataset_path="92e65171-368c-4dab-ba95-57994c156b58/e2454e78-5d23-4d5c-be87-ca2a3e679291/90889d16-0d70-4816-a4d9-f2f9762a934e/optimization/254d343c-0b06-4c7e-998a-59161c8ccb9e.zip"
+
+
+
+pretrain_model_uid='8e3b3c19-d6ae-4a63-87a3-ae4d02ef713d'
+model_access_token="238664f3d766f8f2cbeac1e1536da87880d1ec0d3239aa417d4328338363c835"
 
 credential_server = CredentialServer(
     host=CREDENTIAL_SERVER_HOST,
@@ -74,6 +78,14 @@ class TestFileUtility(unittest.TestCase):
     #             model_uid=model_uid,
     #             model_access_token=model_access_token,
     #         )
+
+    # def test_download_dataset(self):
+    #     downloaded_response = file_manager.download(file_type="model",model_uid=pretrain_model_uid, model_access_token=model_access_token)        
+    #     with open("tests/model/pretrain_model.zip", 'wb') as file:
+    #         if downloaded_response.ok:
+    #             file.write(downloaded_response.content)
+    #         else:
+    #             print("File downloaded failed")
 
 
 if __name__ == '__main__':
