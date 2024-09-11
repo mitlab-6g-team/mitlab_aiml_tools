@@ -51,15 +51,15 @@ file_manager = FileUtility(
 
 
 class TestFileUtility(unittest.TestCase):
-    # def test_download(self):
-    #     downloaded_response = file_manager.download(file_type=file_type, file_path=file_path)
+    def test_download_training_dataset(self):
+        downloaded_response = file_manager.download(file_type="dataset", file_path=download_training_dataset_path)
         
-    #     with open("tests/dataset/original_dataset.zip", 'wb') as file:
-    #         print(downloaded_response)
-    #         if downloaded_response.ok:
-    #             file.write(downloaded_response.content)
-    #         else:
-    #             print("File downloaded failed")
+        with open("tests/dataset/original_dataset.zip", 'wb') as file:
+            print(downloaded_response)
+            if downloaded_response.ok:
+                file.write(downloaded_response.content)
+            else:
+                print("File downloaded failed")
 
     def test_upload_model(self):
         with open(upload_path, 'rb') as file:
