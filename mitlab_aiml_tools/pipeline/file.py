@@ -118,7 +118,7 @@ class FileUtility:
             raise TypeError(f"Expected type {expect_type.__name__}, but got type {type(value).__name__}")
 
     @authenticated_only
-    def upload(self, file_type:str ,file_path=None , file=None):
+    def upload(self, file_type:str ,file_path:str, file=None):
         """
         Upload file to mitlab file server.
 
@@ -131,25 +131,26 @@ class FileUtility:
             str: "File upload failed" on failure.
             str: <Error Message> on exception.
         """
+        
         try:
             # Validate the file type
             is_success, return_message = self._validate_file_type(file_type)
+            
             if not is_success:
                 raise ValueError(return_message)
             
             # Construct the upload URL
             url = f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/GeneralFileManager/upload"
             
-            print("file_path:"+file_path)
-
             # Perform the file upload
-            response = requests.post(url=url, files=file , data=file_path)
-            
+            response = requests.post(url=url, files=file , data={"file_path":file_path})
 
             # Check response status
             if response.status_code == 200:
+                print("great2")
                 return "File uploaded successfully"
             else:
+                print("upload fail")
                 return "File upload failed"
         except Exception as e:
             return str(e)
