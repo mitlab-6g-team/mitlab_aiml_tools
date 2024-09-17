@@ -1,4 +1,5 @@
 import requests
+from .utils.config import config
 from ..auth.credential import authenticated_only
 from ..auth.credential import CredentialServer
 
@@ -20,11 +21,11 @@ class MetricUtility:
     
     def __init__(self,
                  credential_manager: CredentialServer,
-                 protocal,
-                 host,
-                 port,
-                 api_prefix,
-                 api_version,
+                 protocal=config['FILE_SERVER_PROTOCAL'],
+                 host=config['FILE_SERVER_HOST'],
+                 port=config['FILE_SERVER_PORT'],
+                 api_prefix=config['FILE_SERVER_API_PREFIX'],
+                 api_version=config['FILE_SERVER_API_VERSION'],
                 ):
         """
 

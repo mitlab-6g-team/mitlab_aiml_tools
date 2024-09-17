@@ -147,7 +147,7 @@ class FileUtility:
 
             # Check response status
             if response.status_code == 200:
-                print("great2")
+                print("File uploaded successfully")
                 return "File uploaded successfully"
             else:
                 print("upload fail")
