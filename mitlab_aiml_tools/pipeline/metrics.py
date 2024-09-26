@@ -3,6 +3,9 @@ from .utils.config import config
 from ..auth.credential import authenticated_only
 from ..auth.credential import CredentialServer
 
+
+MODULE_NAME = 'pipeline_operation'
+
 MODEL_METRICS = {
     'classification': ['accuracy', 'precision', 'recall', 'f1_score', 'roc_auc'],
     'regression': ['mse', 'rmse', 'mae', 'r2_score'],
@@ -125,7 +128,7 @@ class MetricUtility:
             self._validate_type(model_accuracy,float)
             #print(f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/ModelMetadataWriter/update")
             response = requests.post(
-                url=f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/ModelAccuracyManager/create",
+                url=f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/ModelAccuracyManager/create",
                 json={
                     "model_uid": model_uid,
                     "model_accuracy":model_accuracy
