@@ -131,7 +131,7 @@ class MetricUtility:
             response = requests.post(
                 url=f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/ModelAccuracyManager/create",
                 json={
-                    "model_uid": os.path.basename(model_uid),
+                    "model_uid": os.path.basename(model_uid).rstrip(".zip"),
                     "model_accuracy":model_accuracy
                     },
             )
