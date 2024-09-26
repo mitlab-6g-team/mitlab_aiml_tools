@@ -4,9 +4,9 @@ from mitlab_aiml_tools.pipeline.metrics import MetricUtility
 
 
 ######################## Credential server ########################
-CREDENTIAL_SERVER_HOST = '140.118.122.164'
-CREDENTIAL_SERVER_PORT = '34801'
-CREDENTIAL_ACCESS_KEY = 'user_1'
+CREDENTIAL_SERVER_HOST = '140.118.122.246'
+CREDENTIAL_SERVER_PORT = '50000'
+CREDENTIAL_ACCESS_KEY = 'user1'
 CREDENTIAL_SECRET_KEY = 'test'
 PROTOCAL=False
 API_PREFIX='entrypoint'
@@ -25,11 +25,6 @@ credential_server = CredentialServer(
 
 metric_manager = MetricUtility(
         credential_manager=credential_server,
-        host=CREDENTIAL_SERVER_HOST,
-        port=CREDENTIAL_SERVER_PORT,
-        protocal=PROTOCAL,
-        api_prefix=API_PREFIX,
-        api_version=API_VERSION
     )
 
 class TestFileUtility(unittest.TestCase):
