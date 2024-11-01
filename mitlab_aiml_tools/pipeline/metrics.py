@@ -25,12 +25,12 @@ class MetricUtility:
     
     def __init__(self,
                  credential_manager: CredentialServer,
-                 protocal=config['FILE_SERVER_PROTOCAL'],
-                 host=config['FILE_SERVER_HOST'],
-                 port=config['FILE_SERVER_PORT'],
-                 api_prefix=config['FILE_SERVER_API_PREFIX'],
-                 api_version=config['FILE_SERVER_API_VERSION'],
-                ):
+                 protocal=config['AUTHENTICATE_MIDDLEWARE_SERVER_PROTOCAL'],
+                 host=config['AUTHENTICATE_MIDDLEWARE_SERVER_HOST'],
+                 port=config['AUTHENTICATE_MIDDLEWARE_SERVER_PORT'],
+                 api_prefix=config['AUTHENTICATE_MIDDLEWARE_SERVER_API_PREFIX'],
+                 api_version=config['AUTHENTICATE_MIDDLEWARE_SERVER_API_VERSION'],
+                 api_module_name=config['AUTHENTICATE_MIDDLEWARE_MODULE_NEME']):
         """
 
             Initialization for the File Utility
@@ -55,6 +55,8 @@ class MetricUtility:
             "api_prefix cannot be empty")
         self.api_version = api_version if protocal is not None else ValueError(
             "api_version cannot be empty")
+        self.api_module_name = api_module_name if protocal is not None else ValueError(
+            "api_module_name cannot be empty")
 
     def _validate_type(self, value, expect_type):
         """
@@ -129,7 +131,8 @@ class MetricUtility:
             self._validate_type(model_accuracy,float)
             #print(f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/ModelMetadataWriter/update")
             response = requests.post(
-                url=f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/ModelAccuracyManager/create",
+                url = f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{self.api_module_name}/Router/parse/5aP8Kk9Okiv2WdsO"
+                # url=f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/ModelAccuracyManager/create",
                 json={
                     "model_uid": os.path.basename(model_uid).rstrip(".zip"),
                     "model_accuracy":model_accuracy

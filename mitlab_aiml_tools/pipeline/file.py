@@ -39,11 +39,12 @@ class FileUtility:
 
     def __init__(self,
                  credential_manager: CredentialServer,
-                 protocal=config['FILE_SERVER_PROTOCAL'],
-                 host=config['FILE_SERVER_HOST'],
-                 port=config['FILE_SERVER_PORT'],
-                 api_prefix=config['FILE_SERVER_API_PREFIX'],
-                 api_version=config['FILE_SERVER_API_VERSION'],
+                 protocal=config['AUTHENTICATE_MIDDLEWARE_SERVER_PROTOCAL'],
+                 host=config['AUTHENTICATE_MIDDLEWARE_SERVER_HOST'],
+                 port=config['AUTHENTICATE_MIDDLEWARE_SERVER_PORT'],
+                 api_prefix=config['AUTHENTICATE_MIDDLEWARE_SERVER_API_PREFIX'],
+                 api_version=config['AUTHENTICATE_MIDDLEWARE_SERVER_API_VERSION'],
+                 api_module_name=config['AUTHENTICATE_MIDDLEWARE_MODULE_NEME']
                  ):
         """
             Initialization for the File Utility
@@ -68,6 +69,8 @@ class FileUtility:
             "api_prefix cannot be empty")
         self.api_version = api_version if protocal is not None else ValueError(
             "api_version cannot be empty")
+        self.api_module_name = api_module_name if protocal is not None else ValueError(
+            "api_module_name cannot be empty")
 
     def _validate_file_type(self, type: str):
         """
@@ -140,7 +143,7 @@ class FileUtility:
                 raise ValueError(return_message)
             
             # Construct the upload URL
-            url = f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/GeneralFileManager/upload"
+            url = f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{self.api_module_name}/Router/parse/PXVpRYgnMMHqWthX"
             
             # Perform the file upload
             response = requests.post(url=url, files=file , data={"file_path":file_path})
@@ -179,8 +182,8 @@ class FileUtility:
             for key, value in kwargs.items():
                 self._validate_type(value, str)
 
-            
-            urls=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{'AuthFileManager' if file_type == 'model' else 'GeneralFileManager'}/download"
+            urls = f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{self.api_module_name}/Router/parse/{'gTJsFsf5JIjeAmNb' if file_type == 'model' else 'TTiue1sygXrsm0YS'}"
+            # urls=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{'AuthFileManager' if file_type == 'model' else 'GeneralFileManager'}/download"
             request={}
             if file_type == "model" :
                 request["model_uid"] = kwargs.get("model_uid")

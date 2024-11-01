@@ -1,5 +1,5 @@
 import requests
-
+from mitlab_aiml_tools.pipeline.utils.config import config
 
 class CredentialServer:
     """
@@ -21,17 +21,17 @@ class CredentialServer:
                  access_key=None,
                  secret_key=None,
                  https=False,
-                 api_root='api',
-                 api_version='v1.1.1',
-                 api_prefix='entrypoint'):
+                 api_version=config['AUTHENTICATE_MIDDLEWARE_SERVER_API_VERSION'],
+                 api_prefix=config['AUTHENTICATE_MIDDLEWARE_SERVER_API_PREFIX'],
+                 api_module_name=config['AUTHENTICATE_MIDDLEWARE_MODULE_NEME']):
         self.host = host
         self.port = port
         self.access_key = access_key
         self.secret_key = secret_key
-        self.api_root = api_root
         self.api_version = api_version
         self.api_prefix = api_prefix
         self.https = https
+        self.api_module_name = api_module_name
         self._credentials = None
         self._authenticate()
 
@@ -41,7 +41,7 @@ class CredentialServer:
     def _authenticate(self):
         try:
             VALIDATOR_TYPE = 'AccountValidator'
-            api_url = f'{"https" if self.https else "http"}://{self.host}{f":{self.port}" if self.port else ""}/{self.api_root}/{self.api_version}/{self.api_prefix}/{VALIDATOR_TYPE}/login'
+            api_url = f'{"https" if self.https else "http"}://{self.host}{f":{self.port}" if self.port else ""}/{self.api_prefix}/{self.api_version}/{self.api_module_name}/{VALIDATOR_TYPE}/login'
             res = requests.post(
                 url=api_url,
                 json={"account_name": self.access_key,
