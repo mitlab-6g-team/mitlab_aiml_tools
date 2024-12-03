@@ -149,7 +149,7 @@ class FileUtility:
             response = requests.post(url=url, files=file , data={"file_path":file_path})
 
             # Check response status
-            if response.status_code == 200:
+            if response.status_code == 201:
                 print("File uploaded successfully")
                 return "File uploaded successfully"
             else:
