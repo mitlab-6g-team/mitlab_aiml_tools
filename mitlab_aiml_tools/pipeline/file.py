@@ -176,28 +176,26 @@ class FileUtility:
 
         try:
             is_success, return_message = self._validate_file_type(file_type)
-            print(is_success)
-            print(return_message)
+
             if not is_success:
                 raise ValueError(return_message)
             
             for key, value in kwargs.items():
                 self._validate_type(value, str)
-            print(kwargs.items())
+
             urls = f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{self.api_module_name}/Router/parse/{'gTJsFsf5JIjeAmNb' if file_type == 'model' else 'TTiue1sygXrsm0YS'}"
             # urls=f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/{'AuthFileManager' if file_type == 'model' else 'GeneralFileManager'}/download"
-            print(urls)
+
             request={}
             if file_type == "model" :
                 request["model_uid"] = kwargs.get("model_uid")
                 request["model_access_token"] = kwargs.get("model_access_token")
             elif file_type == "dataset":
                 request["file_path"] = kwargs.get("file_path")
-            print(request)
+
             if not all(request.values()):
                 raise ValueError("Missing required parameters for the file type.")
-            print(all(request.values()))
-            print(request.values())
+
             response = requests.post(
                 url=urls,
                 headers=default_header,
@@ -205,5 +203,4 @@ class FileUtility:
             )
             return response
         except Exception as e:
-            print(str(e))
             return str(e)
