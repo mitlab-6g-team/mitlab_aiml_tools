@@ -131,8 +131,8 @@ class MetricUtility:
             self._validate_type(model_accuracy,float)
             #print(f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/ModelMetadataWriter/update")
             response = requests.post(
-                url = f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{self.api_module_name}/Router/parse/5aP8Kk9Okiv2WdsO",
-                # url=f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/ModelAccuracyManager/create",
+                url = f"{self.protocal}://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{self.api_module_name}/Router/parse/siJLKf5He1wksCH2",
+                # url=f"http://{self.host}:{self.port}/{self.api_prefix}/{self.api_version}/{MODULE_NAME}/ModelMessenger/update",
                 json={
                     "model_uid": os.path.basename(model_uid).rstrip(".zip"),
                     "model_accuracy":model_accuracy
